@@ -1,9 +1,11 @@
 <?php
 
+
 include_once 'common_php/database.php';
 RegisterUser();
 LoginUser();
 ExitUser();
+
 
 ?>
 
