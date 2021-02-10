@@ -1,6 +1,9 @@
 <?php
-
-
+session_start();
+if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
+    header("location:/projects/php-aban/Eshop_Template/index.php");
+}
+echo $_SESSION['user'];
 include_once 'common_php/database.php';
 RegisterUser();
 LoginUser();
@@ -12,7 +15,7 @@ ExitUser();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php include_once 'common_html/header_link.php' ?>
+    <?php include_once 'common_html/header_link.php' ?>
 </head>
 
 <body>
@@ -26,19 +29,36 @@ ExitUser();
                     <h2>ورود به حساب کاربـری :</h2>
                     <form method="post">
                         <?php
-                        if(isset($_GET["login"]) && $_GET['login'] == 'false'){
-	                        echo "<p style='color: red'>لطفا تمام بخش های ستاره دار را کامل کنید !</p>";
+                        if (isset($_GET["login"]) && $_GET['login'] == 'false') {
+                            echo "<p style='color: red'>لطفا تمام بخش های ستاره دار را کامل کنید !</p>";
                         }
-                        if(isset($_GET["login-user"]) && $_GET['login-user'] == 'false'){
-	                        echo "<p style='color: red'>اطلاعات وارد شده صحیح نیست</p>";
+                        if (isset($_GET["login-user"]) && $_GET['login-user'] == 'false') {
+                            echo "<p style='color: red'>اطلاعات وارد شده صحیح نیست</p>";
                         }
                         ?>
-                        <input name="login_username_email" type="text" placeholder="نام کاربری یا آدرس ایمیل"/>
-                        <input name="login_password" type="password" placeholder="رمز عبور"/>
+                        <input name="login_username_email" type="text" placeholder="نام کاربری یا آدرس ایمیل"
+                               value="<?php if (isset($_COOKIE['remind']) && !empty($_COOKIE['remind'])) {
+                                   echo $_COOKIE['remind'];
+                               }
+                               ?>"
+                        />
+                        <input name="login_password" type="password" placeholder="رمز عبور"
+                               value="<?php if (isset($_COOKIE['remind2']) && !empty($_COOKIE['remind2'])) {
+                                   echo $_COOKIE['remind2'];
+                               }
+                               ?>"
+                        />
+
                         <span>
-                                <input type="checkbox" class="checkbox">
-								    مرا بخاطـر بسپـار
-							</span>
+
+                            <input type="checkbox" class="checkbox" name="forget" value="true"
+                            <?php
+                            if (isset($_COOKIE['remind2']) && !empty($_COOKIE['remind2']))
+                                echo 'checked';
+                            ?>
+                            >
+                                مرا بخاطـر بسپـار
+                        </span>
                         <span>
 								<a href="forget-password.html">رمـز عبـور خود را فراموش کرده ام</a>
 							</span>
@@ -54,17 +74,17 @@ ExitUser();
                     <h2>ثبت نام کاربـر جدیـد</h2>
                     <form method="post" enctype="multipart/form-data">
                         <?php
-                        if(isset($_GET["input"]) && $_GET["input"] == 'false'){
+                        if (isset($_GET["input"]) && $_GET["input"] == 'false') {
                             echo "<p style='color: red'>لطفا تمام بخش های ستاره دار را کامل کنید !</p>";
                         }
-                        if(isset($_GET["user"]) && $_GET['user'] == 'false'){
-	                        echo "<p style='color: red'>نام کاربری یا آدرس ایمیل در سیستم موجود است</p>";
+                        if (isset($_GET["user"]) && $_GET['user'] == 'false') {
+                            echo "<p style='color: red'>نام کاربری یا آدرس ایمیل در سیستم موجود است</p>";
                         }
-                        if(isset($_GET["password"]) && $_GET['password'] == 'false'){
-	                        echo "<p style='color: red'>تکرار رمز عبور صحیح نیست</p>";
+                        if (isset($_GET["password"]) && $_GET['password'] == 'false') {
+                            echo "<p style='color: red'>تکرار رمز عبور صحیح نیست</p>";
                         }
-                        if(isset($_GET["register"]) && $_GET['register'] == 'true'){
-	                        echo "<p style='color: green'>ثبت نام با موفقیت انجام شد لطفا وارد شوید</p>";
+                        if (isset($_GET["register"]) && $_GET['register'] == 'true') {
+                            echo "<p style='color: green'>ثبت نام با موفقیت انجام شد لطفا وارد شوید</p>";
                         }
                         ?>
                         <input name="username" type="text" placeholder="* نام کاربـری"/>

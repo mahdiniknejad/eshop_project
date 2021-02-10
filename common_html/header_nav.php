@@ -1,18 +1,3 @@
-<?php
-session_start();
-
-if (isset($_SESSION['user'])) {
-	include_once 'common_php/database.php';
-	$connect = database();
-
-	$result = $connect->prepare("SELECT * FROM users WHERE username=?");
-	$result->bindValue(1, $_SESSION['user']);
-	$result->execute();
-	$row = $result->fetch(PDO::FETCH_ASSOC);
-}
-
-?>
-
 <header id="header"><!--header-->
 	<div class="header_top"><!--header_top-->
 		<div class="container">
@@ -53,16 +38,16 @@ if (isset($_SESSION['user'])) {
 				<div class="col-sm-8 header-middle-menu">
 					<div class="shop-menu pull-right">
 						<ul class="nav navbar-nav">
-							<li><a href="#"><i class="fa fa-user"></i> حساب کاربـری</a></li>
-							<li><a href="#"><i class="fa fa-star"></i> لیست علاقه مندی ها</a></li>
-                            <?php
+						<?php
                             if(isset($_SESSION['user'])){
                             ?>
-							    <li><a href="<?php echo 'login.php?exituser=true'?>" class="active"><i class="fa fa-lock"></i> خروج </a></li>
+							    <li><a href="<?php echo '/projects/php-aban/Eshop_Template/login.php?exituser=true'?>" class="active"><i class="fa fa-lock"></i> خروج </a></li>
+								<li><a href="#"><i class="fa fa-user"></i> حساب کاربـری</a></li>
+								<li><a href="#"><i class="fa fa-star"></i> لیست علاقه مندی ها</a></li>
+								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
                             <?php } else { ?>
                                 <li><a href="login.php" class="active"><i class="fa fa-lock"></i> ورود/ثبت نام</a></li>
-                            <?php } ?>
-							<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
+							<?php } ?>
 						</ul>
 					</div>
 				</div>
@@ -91,15 +76,9 @@ if (isset($_SESSION['user'])) {
 					</div>
 					<div class="mainmenu pull-right">
 						<ul class="nav navbar-nav collapse navbar-collapse">
-							<li><a href="index.html">خـانه</a></li>
-							<li class="dropdown"><a href="#" class="active">فروشگـاه<i class="fa fa-angle-down"></i></a>
-								<ul role="menu" class="sub-menu">
-									<li><a href="shop.html">محصولات</a></li>
-									<li><a href="product-details.html">جزئیات محصولات</a></li>
-									<li><a href="checkout.html">پرداخت</a></li>
-									<li><a href="cart.html">سبـد خریـد</a></li>
-									<li><a href="login.php" class="active">ورود</a></li>
-								</ul>
+							<li><a href="/projects/php-aban/Eshop_Template/index.php">خـانه</a></li>
+							<li><a href="#" class="active">فروشگـاه</a>
+
 							</li>
 							<li class="dropdown"><a href="#">اخبـار<i class="fa fa-angle-down"></i></a>
 								<ul role="menu" class="sub-menu">
